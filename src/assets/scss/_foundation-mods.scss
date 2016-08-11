@@ -1,0 +1,12 @@
+.sticky {
+  z-index: 5;
+  background-color: #fff;
+  border-bottom: 1px solid $light-gray;
+}
+.nav-logo {
+  width: rem-calc(200);
+  margin-left: rem-calc(20);
+  @include breakpoint(medium) {
+    margin-left: 0;
+  }
+}

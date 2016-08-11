@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+
+  {% include head.html %}
+
+  <body>
+
+    {% include header.html %}
+
+    {{ content }}
+
+    {% include footer.html %}
+
+  <!-- JS -->
+  <!-- inject:js -->
+  <!-- endinject -->
+
+  {% if page.maps %}
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyANcJnIsKiKnrECNVCgdUouNIsdEP7qHzA&callback=initMap" async defer></script>
+  {% endif %}
+  </body>
+
+</html>
