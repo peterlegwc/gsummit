@@ -4,7 +4,7 @@ Website for the conference to be held in San Francisco, CA. Uses `gulp` build to
 
 ## To get started
 
-To get started, make sure node and ruby are required. Then install with git
+To get started, make sure `node` and `ruby` are required. Then install with git
 
 ```sh
 git clone https://github.com/peterlegwc/gsummit.git projectname
@@ -12,7 +12,7 @@ git clone https://github.com/peterlegwc/gsummit.git projectname
 
 Install the needed dependencies:
 
-```ssh
+```sh
 cd projectname
 npm install
 bundle install
@@ -35,3 +35,5 @@ $ gulp build [--prod]
 ## Templating
 
 The site is built with [Jekyll](https://jekyllrb.com/) using the [Foundation](http://foundation.zurb.com/) front-end framework. For templating, see the [Jekyll docs](https://jekyllrb.com/docs/home/). For styling, see the [Foundation for Sites docs](http://foundation.zurb.com/sites/docs/).
+
+Generally, if you are editing/translating, you should only have to edit the html files in the root `/` and `_includes` directories
