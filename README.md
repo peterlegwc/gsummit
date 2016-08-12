@@ -16,6 +16,7 @@ Install the needed dependencies:
 cd projectname
 npm install
 bundle install
+bower install
 ```
 
 ## Usage
@@ -31,6 +32,7 @@ To build the project for upload/production
 ```sh
 $ gulp build [--prod]
 ```
+Minified and production-ready files are generated in the `dist` folder
 
 ## Templating
 
