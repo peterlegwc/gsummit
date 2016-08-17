@@ -86,7 +86,13 @@
     .speakers .columns:nth-child(3n+1) {
       clear: none;
     }
-    .speakers .columns:nth-child(5n+1) {
+    .speakers .columns:nth-child(4n+1) {
+      clear: both;
+    }
+    .speakers .five-col.columns:nth-child(4n+1) {
+      clear: none;
+    }
+    .speakers .five-col.columns:nth-child(5n+1) {
       clear: both;
     }
   }
