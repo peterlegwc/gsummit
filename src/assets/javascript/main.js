@@ -14,10 +14,10 @@ $(document).ready(function() {
       $slides
         .css('background-image', 'url("' + slideImgs[currentSlide++] + '")')
         .show(0, function() {
-          setTimeout(slideshow, 5000);
+          setTimeout(slideshow, 6000);
         });
     };
-    setTimeout(slideshow, 5000);
+    setTimeout(slideshow, 6000);
   }
 });
 

@@ -14,12 +14,9 @@
   <!-- JS -->
   <!-- inject:js -->
   <!-- endinject -->
+
     {% if page.url == "/" %}
-    <style>
-      .columns:last-child:not(:first-child) {
-          float: left;
-      }
-    </style>
+
     <div id="dtmp" style="display:none;">
         <div class="small-4 medium-3 columns ds">
             <div class="speaker-box text-center">
@@ -83,12 +80,7 @@
     </script>
   {% endif %}
 
-  {% if page.url == "/speakers/" %}   
-      <style>
-      .columns:last-child:not(:first-child) {
-          float: left;
-      }
-    </style> 
+  {% if page.url == "/speakers/" %}
      <div id="dtmp" style="display:none;">
         <div class="small-4 medium-3 columns ds">
             <div class="speaker-box text-center">
@@ -151,7 +143,6 @@
         }
     </script>
   {% endif %}
-
 
   <div style="display:none">
     <script src="https://s11.cnzz.com/z_stat.php?id=1260157284&web_id=1260157284"></script>

@@ -1,0 +1,42 @@
+.speakers {
+  .columns:last-child:not(:first-child) {
+    float: left;
+  }
+  .columns:nth-child(3n+1) {
+    clear: both;
+  }
+  .speaker-box {
+    margin-bottom: rem-calc(10);
+    img {
+      border-bottom: rem-calc(2) solid map-get($foundation-palette, secondary);
+    }
+    .speaker-name,
+    .speaker-title,
+    .speaker-company {
+      font-size: 0.7em;
+      @include breakpoint(medium) {
+        font-size: .8em;
+      }
+    }
+    .speaker-name {
+      font-weight: bold;
+    }
+    .speaker-company {
+      font-style: italic;
+    }
+  }
+  @include breakpoint(medium) {
+    .columns:nth-child(3n+1) {
+      clear: none;
+    }
+    .columns:nth-child(4n+1) {
+      clear: both;
+    }
+    .five-col.columns:nth-child(4n+1) {
+      clear: none;
+    }
+    .five-col.columns:nth-child(5n+1) {
+      clear: both;
+    }
+  }
+}

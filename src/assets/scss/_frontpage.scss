@@ -5,7 +5,7 @@
   position: relative;
   z-index: 1;
   height: rem-calc(240);
-  background-image: url('../images/photo-stage-bj.jpg');
+  background-image: url('../images/photo-fireside-ng.jpg');
   transition: background 1s linear;
   .social {
     display: none;
@@ -55,45 +55,6 @@
     @include breakpoint(small down) {
       font-size: $global-font-size;
       line-height: $global-lineheight;
-    }
-  }
-}
-.luminaries {
-  .speaker-box {
-    margin-bottom: rem-calc(10);
-    img {
-      border-bottom: rem-calc(2) solid map-get($foundation-palette, secondary);
-    }
-    .speaker-name,
-    .speaker-title,
-    .speaker-company {
-      font-size: 0.7em;
-      @include breakpoint(medium) {
-        font-size: .8em;
-      }
-    }
-    .speaker-name {
-      font-weight: bold;
-    }
-    .speaker-company {
-      font-style: italic;
-    }
-  }
-  .speakers .columns:nth-child(3n+1) {
-    clear: both;
-  }
-  @include breakpoint(medium) {
-    .speakers .columns:nth-child(3n+1) {
-      clear: none;
-    }
-    .speakers .columns:nth-child(4n+1) {
-      clear: both;
-    }
-    .speakers .five-col.columns:nth-child(4n+1) {
-      clear: none;
-    }
-    .speakers .five-col.columns:nth-child(5n+1) {
-      clear: both;
     }
   }
 }
