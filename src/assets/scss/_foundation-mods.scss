@@ -10,3 +10,9 @@
     margin-left: 0;
   }
 }
+body.is-reveal-open {
+  overflow: visible;
+}
+.reveal-overlay {
+  overflow-y: hidden;
+}

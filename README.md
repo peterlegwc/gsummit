@@ -39,8 +39,3 @@ Minified and production-ready files are generated in the `dist` folder
 The site is built with [Jekyll](https://jekyllrb.com/) using the [Foundation](http://foundation.zurb.com/) front-end framework. For templating, see the [Jekyll docs](https://jekyllrb.com/docs/home/). For styling, see the [Foundation for Sites docs](http://foundation.zurb.com/sites/docs/).
 
 Generally, if you are editing/translating, you should only have to edit the html files in the root `/` and `_includes` directories
-
-## Todo
-- [ ] Move speaker API calls out of templates and into JS files
-- [ ] Implement speakers into Foundation modals (clears up FancyBox requirement)
-- [ ] Figure out analytics (not working in US)

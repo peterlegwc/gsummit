@@ -10,143 +10,33 @@
     {{ content }}
 
     {% include footer.html %}
+    <div class="reveal speaker-modal" id="speaker-detail" data-reveal>
+      <div class="container">
+        <div class="row">
+          <div class="small-12 medium-4 columns photo">
+          </div>
+          <div class="small-12 medium-8 columns">
+            <div class="speaker-name"></div>
+            <div class="speaker-title"></div>
+            <div class="speaker-company"></div>
+            <div class="speaker-bio"></div>
+          </div>
+        </div>
+      </div>
+      <button class="close-button" data-close aria-label="Close modal" type="button">
+        <span aria-hidden="true">&times;</span>
+      </button>
+  </div>
 
   <!-- JS -->
   <!-- inject:js -->
   <!-- endinject -->
 
-    {% if page.url == "/" %}
-
-    <div id="dtmp" style="display:none;">
-        <div class="small-4 medium-3 columns ds">
-            <div class="speaker-box text-center">
-                <a href="" class="fancybox iframe"><img src="" alt=""></a>
-                <div class=speaker-name></div>
-                <div class=speaker-title></div>
-                <div class=speaker-company></div>
-            </div>
-        </div>
-    </div>
-    <script type="text/javascript">
-        var lang = '/en-us', g_url = ["http://apius.gwcevents.com"];
-        jQuery(document).ready(function () {
-            /* link */
-            var link = document.createElement("link");
-            link.rel = "stylesheet";
-            link.type = "text/css";
-            link.href = "http://cdn.staticfile.org/fancybox/2.1.5/jquery.fancybox.min.css";
-            document.getElementsByTagName("head")[0].appendChild(link);
-            /* script */
-            var script = document.createElement('script');
-            script.type = "text/javascript";
-            script.src = "http://cdn.staticfile.org/fancybox/2.1.5/jquery.fancybox.min.js";
-            document.getElementsByTagName('head')[0].appendChild(script);
-            /* speakers */
-            jQuery.getJSON(g_url[0] + lang + "/speaker/getspeakerlist", { gmicId: 16 }, function (data) {
-                speakerbind(data);
-            });
-
-            jQuery('#speakers').on("click", '.fancybox', function () {
-                var path = jQuery(this).attr("data-path");
-                if (path != null && path != undefined) {
-                    var url = 'http://apius.gwcevents.com' + lang + path;
-                    jQuery('.fancybox').fancybox({
-                        type: 'iframe',
-                        href: url,
-                        autoSize: true
-                    });
-                }
-            }).find(".fancybox");
-
-        });
-        function speakerbind(data, no) {
-            if (data.message != "SUCCESS")
-                return;
-            var result = data.result.speakers;
-            var obj = jQuery("#speakers");
-            for (var i = 0; i < result.length; i++) {
-                var tmp = jQuery("#dtmp > div.ds").clone();
-                tmp.find("a").attr({ "data-path": "/speaker/getspeakerhtmlbyid?speakerId=" + result[i].id, "href": "javascript:;" });
-                var purl = result[i].photo_url;
-                if (purl == '')
-                    purl = '/wp-content/uploads/2016/07/gmic-img.png';
-                tmp.find("img").attr({ "src": purl, "alt": result[i].name });
-                tmp.find(".speaker-name").text(result[i].name);
-                tmp.find(".speaker-title").text(result[i].title);
-                tmp.find(".speaker-company").text(result[i].company);
-                tmp.appendTo(obj);
-            }
-        }
-    </script>
-  {% endif %}
-
-  {% if page.url == "/speakers/" %}
-     <div id="dtmp" style="display:none;">
-        <div class="small-4 medium-3 columns ds">
-            <div class="speaker-box text-center">
-                <a href="" class="fancybox iframe"><img src="" alt=""></a>
-                <div class=speaker-name></div>
-                <div class=speaker-title></div>
-                <div class=speaker-company></div>
-            </div>
-        </div>
-    </div>
-    <script type="text/javascript">
-        var lang = '/en-us', g_url = ["http://apius.gwcevents.com"];
-        jQuery(document).ready(function () {
-            /* link */
-            var link = document.createElement("link");
-            link.rel = "stylesheet";
-            link.type = "text/css";
-            link.href = "http://cdn.staticfile.org/fancybox/2.1.5/jquery.fancybox.min.css";
-            document.getElementsByTagName("head")[0].appendChild(link);
-            /* script */
-            var script = document.createElement('script');
-            script.type = "text/javascript";
-            script.src = "http://cdn.staticfile.org/fancybox/2.1.5/jquery.fancybox.min.js";
-            document.getElementsByTagName('head')[0].appendChild(script);
-            /* speakers */
-            jQuery.getJSON(g_url[0] + lang + "/speaker/getspeakerlist", { gmicId: 16 }, function (data) {
-                speakerbind(data);
-            });
-
-            jQuery('#speakers').on("click", '.fancybox', function () {
-                var path = jQuery(this).attr("data-path");
-                if (path != null && path != undefined) {
-                    var url = 'http://apius.gwcevents.com' + lang + path;
-                    jQuery('.fancybox').fancybox({
-                        type: 'iframe',
-                        href: url,
-                        autoSize: true
-                    });
-                }
-            }).find(".fancybox");
-
-        });
-        function speakerbind(data, no) {
-            if (data.message != "SUCCESS")
-                return;
-            var result = data.result.speakers;
-            var obj = jQuery("#speakers");
-            for (var i = 0; i < result.length; i++) {
-                var tmp = jQuery("#dtmp > div.ds").clone();
-                tmp.find("a").attr({ "data-path": "/speaker/getspeakerhtmlbyid?speakerId=" + result[i].id, "href": "javascript:;" });
-                var purl = result[i].photo_url;
-                if (purl == '')
-                    purl = '/wp-content/uploads/2016/07/gmic-img.png';
-                tmp.find("img").attr({ "src": purl, "alt": result[i].name });
-                tmp.find(".speaker-name").text(result[i].name);
-                tmp.find(".speaker-title").text(result[i].title);
-                tmp.find(".speaker-company").text(result[i].company);
-                tmp.appendTo(obj);
-            }
-        }
-    </script>
-  {% endif %}
 
   <div style="display:none">
-    <script src="https://s11.cnzz.com/z_stat.php?id=1260157284&web_id=1260157284"></script>
+    <script type="text/javascript" src="//s11.cnzz.com/z_stat.php?id=1260157284&web_id=1260157284"></script>
   </div>
+
   {% if page.maps %}
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyANcJnIsKiKnrECNVCgdUouNIsdEP7qHzA&callback=initMap" async defer></script>
   {% endif %}

@@ -1,8 +1,11 @@
 'use strict';
 
+var speaker_api = 'http://apius.gwcevents.com/speaker/getspeakerlist';
+var event_id = 16;
+var speakers = [];
+
 $(document).ready(function() {
-  // change this if not in a root folder
-  if (location.pathname == '/') {
+  if ($('.slideshow').length) {
     var $slides = $('[data-slides]');
     var slideImgs = $slides.data('slides');
     var slideCount = slideImgs.length;
@@ -18,6 +21,87 @@ $(document).ready(function() {
         });
     };
     setTimeout(slideshow, 6000);
+  }
+  if ($('.speakers').length) {
+    var opt = {gmicId:event_id};
+
+    if (location.pathname == '/') {
+      opt.isMainPage = true;
+    }
+
+    $.getJSON(speaker_api, opt, function (data) {
+      if (data.message != "SUCCESS") {
+        console.log('There was an error with the request');
+      }
+      else {
+        speakers = data.result.speakers;
+        // returns an array of objects sorted by last name
+        $.each(speakers, function(index, speaker) {
+          var $ele = $('<div>', {'class': 'small-4 medium-3 columns'})
+            .append($('<div>', {'class' : 'speaker-box text-center'})
+              .append($('<a>', {
+                'class' : 'speaker-' + speaker.id
+              })
+                .append($('<img>', {
+                  'src' : speaker.photo_url,
+                  'alt' : speaker.name
+                }))
+              )
+              .append($('<div>', {
+                'class': 'speaker-name',
+                'text' : speaker.name
+              }))
+              .append($('<div>', {
+                'class': 'speaker-title',
+                'text' : speaker.title
+              }))
+              .append($('<div>', {
+                'class': 'speaker-company',
+                'text' : speaker.company
+              }))
+          );
+          $ele.appendTo('#speakers');
+        });
+
+        $('#speakers').on('click', 'a', function(e) {
+          var id = $(this).attr('class').split('-')[1];
+          var selected = {};
+          clearModal();
+
+          $.each(speakers, function(index, speaker) {
+            if (speaker.id == id) {
+              selected = speaker;
+            }
+          });
+
+          if (selected) {
+            $('#speaker-detail .photo').html($('<img>', {
+              'src': selected.photo_url,
+              'alt': selected.name,
+              'class': 'speaker-photo'
+            }));
+            $('#speaker-detail .speaker-name').html(selected.name);
+            $('#speaker-detail .speaker-title').html(selected.title);
+            $('#speaker-detail .speaker-company').html(selected.company);
+            if (selected.intro) {
+              $('#speaker-detail .speaker-bio').html('<hr>' + selected.intro);
+            }
+            $('#speaker-detail').foundation('open');
+          }
+          else {
+            console.log('Speaker with id ' + id + ' not found');
+          }
+        });
+
+        function clearModal() {
+          $('#speaker-detail .photo').html('');
+          $('#speaker-detail .speaker-name').html('');
+          $('#speaker-detail .speaker-title').html('');
+          $('#speaker-detail .speaker-company').html('');
+          $('#speaker-detail .speaker-bio').html('');
+        }
+      }
+    });
   }
 });
 
