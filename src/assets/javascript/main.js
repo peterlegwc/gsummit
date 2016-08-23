@@ -1,6 +1,6 @@
 'use strict';
 
-var speaker_api = 'http://apius.gwcevents.com/speaker/getspeakerlist';
+var speaker_api = 'http://apius.gwcevents.com/en-us/speaker/getspeakerlist';
 var event_id = 16;
 var speakers = [];
 
