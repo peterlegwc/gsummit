@@ -1,6 +1,7 @@
 'use strict';
 
 var speaker_api = 'http://apius.gwcevents.com/en-us/speaker/getspeakerlist';
+var agenda_api = 'http://apius.gwcevents.com/en-us/summit/getsummitlist';
 var event_id = 16;
 var speakers = [];
 
@@ -37,6 +38,7 @@ $(document).ready(function() {
         speakers = data.result.speakers;
         // returns an array of objects sorted by last name
         $.each(speakers, function(index, speaker) {
+          // TODO: handle if speaker image not specified
           var $ele = $('<div>', {'class': 'small-4 medium-3 columns'})
             .append($('<div>', {'class' : 'speaker-box text-center'})
               .append($('<a>', {
