@@ -29,7 +29,7 @@
         display: none;
       }
     }
-    @include breakpoint(medium) {
+    @include breakpoint(large) {
       font-size: 1.2em;
       .date-location {
         .date, .location, span {
