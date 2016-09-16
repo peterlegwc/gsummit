@@ -89,6 +89,15 @@
     background-image: url('../images/bg-svglobe.jpg');
   }
 }
+.partner-list {
+  &.text-center {
+    font-size: 0;
+    > li {
+      float: none;
+      display: inline-block;
+    }
+  }
+}
 .worldmap {
   width: rem-calc(400);
 }

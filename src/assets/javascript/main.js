@@ -1,9 +1,10 @@
 'use strict';
 
-var speaker_api = 'http://apius.gwcevents.com/en-us/speaker/getspeakerlist';
-var agenda_api = 'http://apius.gwcevents.com/en-us/summit/getsummitlist';
+var api_locale = '/en-us/';
+var gwc_api = 'http://apius.gwcevents.com';
 var event_id = 16;
 var speakers = [];
+var agenda = [];
 
 $(document).ready(function() {
   if ($('.slideshow').length) {
@@ -30,9 +31,9 @@ $(document).ready(function() {
       opt.isMainPage = true;
     }
 
-    $.getJSON(speaker_api, opt, function (data) {
+    $.getJSON(gwc_api + api_locale + 'speaker/getspeakerlist', opt, function (data) {
       if (data.message != "SUCCESS") {
-        console.log('There was an error with the request');
+        console.log('There was an error with the request.');
       }
       else {
         speakers = data.result.speakers;
@@ -104,6 +105,134 @@ $(document).ready(function() {
         }
       }
     });
+  }
+  if ($('#agenda').length) {
+    var days = [];
+    var opt = {
+      'summitId': 2477,
+      'speakerDetail': !0
+    };
+    $.getJSON(gwc_api + api_locale + 'summit/getsummitbyid', opt, function (data) {
+      if (data.message != 'SUCCESS' || data.result.length < 1) {
+        console.log('Error with request, or no summit exists.');
+      }
+      else {
+        var topics = data.result.summits[0].section_topics;
+        $.each(topics, function(i, topic) {
+          agenda = agenda.concat(topic.schedules);
+        });
+        agenda.sort(function(a,b){
+          return new Date(Date.parse(a.begin_time)) - new Date(Date.parse(b.begin_time));
+        });
+        displayAgenda(agenda);
+      }
+    });
+  }
+  if ($('.partners').length) {
+    var opt = {
+      gmicId: event_id,
+      attendtype: 'Partner'
+    };
+    var partners;
+    $.getJSON(gwc_api + api_locale + 'exhibitor/GetExhibitorsList', opt, function (data) {
+      if (data.Status != "SUCCESS" || data.ExhibitorList.length < 1) {
+        console.log('There was an error with the request, or no partners exist.');
+      }
+      else {
+        partners = data.ExhibitorList;
+        $.each(partners, function(index, partner) {
+          var $ele = $('<li>', {'class':'partner-block'});
+          var $link = $('<a>').attr('href', partner.WebSite);
+          var $img = $('<img>').attr({
+            'src': partner.LogoUrl,
+            'alt': partner.NativeName,
+            'class': 'partner-logo'
+          });
+          $link.append($img);
+          $ele.append($link);
+          $('.partner-list').append($ele);
+        });
+      }
+    });
+  }
+  function displayAgenda(agenda) {
+    var days = [];
+    var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    var dayOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    var containerNum = 0;
+    $.each(agenda, function(i, session) {
+      var $list_item, $container, $title, $time, $description, $format, $speakers, $moderator;
+      console.log(session.begin_time+'-07:00');
+      var startTime = new Date(Date.parse(session.begin_time+'-07:00'));
+      var endTime = new Date(Date.parse(session.end_time+'-07:00'));
+
+
+      if (days.indexOf(startTime.getDate()) < 0) {
+        days.push(startTime.getDate());
+        var $day_header = $('<h4>').append(dayOfWeek[startTime.getDay()] + ', ' + months[startTime.getMonth()] + ' ' + startTime.getDate());
+        $('#agenda').append($day_header).append(
+          $('<ul>', {'class': 'agenda day-' + containerNum})
+        );
+        containerNum++;
+      }
+
+      $list_item = $('<li>', {'class': 'agenda-item'});
+      $container = $('<div>', {'class': 'session'});
+      $title = $('<span>', {'class': 'title'}).append(session.topic);
+      $time = $('<span>', {'class': 'time'}).append(getTime(startTime) + ' - ' + getTime(endTime));
+      if (session.section_topic_id != 0) {
+        $container.addClass('sub-session');
+      }
+      if (session.description.length) {
+        $description = $('<span>', {'class': 'description'}).append(session.description);
+      }
+      if (session.speakers.length) {
+        $speakers = $('<div>', {'class':'row small-up-2 speaker-list'}).append($('<h5>Speakers</h5>'));
+        $.each(session.speakers, function(j, speaker) {
+          var $speaker_block = $('<div>', {'class': 'column media-object stack-for-small clearfix'});
+          var $speaker_img = $('<div>', {'class': 'media-object-section'}).append($('<img>', {
+            'class': 'speaker-img float-left',
+            'src' : speaker.photo_url,
+            'alt' : speaker.name
+          }));
+          var $speaker_content = $('<div>', {'class': 'media-object-section'});
+          var $speaker_name = $('<span>', {'class': 'speaker-name'}).append(speaker.name);
+          if (speaker.speaker_type == 'Moderator') {
+            $speaker_name.append($('<span class="moderator">(Moderator)</span>'));
+          }
+          var $speaker_desc = $('<span>', {'class': 'speaker-desc'}).append(speaker.title + ', ' + speaker.company);
+          $speaker_content.append($speaker_name).append($speaker_desc);
+          $speaker_block.append($speaker_img).append($speaker_content);
+          $speakers.append($speaker_block);
+        });
+      }
+      $container.append($title).append($time).append($format).append($description).append($speakers);
+      $list_item.append($container);
+
+      $('.agenda.day-' + (containerNum - 1)).append($list_item);
+    });
+  }
+  function getTime(date) {
+    var hours = date.getHours();
+    var minutes = date.getMinutes();
+    var ampm = 'AM';
+    if (hours == 0) {
+      hours = 12;
+    }
+    else if (hours == 12) {
+      ampm = 'PM';
+    }
+    else if (hours > 12) {
+      ampm = 'PM';
+      hours = date.getHours() - 12;
+    }
+    if (hours.toString().length < 2) {
+      hours = '0' + hours;
+    }
+    if (minutes.toString().length < 2) {
+      minutes = '0' + minutes;
+    }
+    return hours + ':' + minutes + ' ' + ampm;
   }
 });
 

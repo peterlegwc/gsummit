@@ -20,6 +20,7 @@ gulp.task('scripts', () =>
   // NOTE: The order here is important since it's concatenated in order from
   // top to bottom, so you want vendor scripts etc on top
   gulp.src([
+    'bower_components/DateJS/build/date-en-US.js',
     'bower_components/jquery/dist/jquery.min.js',
     'bower_components/foundation-sites/dist/foundation.min.js',
     'src/assets/javascript/vendor.js',
