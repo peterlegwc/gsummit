@@ -18,6 +18,7 @@
   "dependencies": {
     "foundation-sites": "^6.2.3",
     "font-awesome": "^4.6.3",
-    "DateJS": "datejs#^1.0.0-rc3"
+    "moment": "^2.15.0",
+    "moment-timezone": "^0.5.5"
   }
 }

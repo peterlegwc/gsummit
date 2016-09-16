@@ -110,7 +110,7 @@ $(document).ready(function() {
     var days = [];
     var opt = {
       'summitId': 2477,
-      'speakerDetail': !0
+      'speakerDetail': true
     };
     $.getJSON(gwc_api + api_locale + 'summit/getsummitbyid', opt, function (data) {
       if (data.message != 'SUCCESS' || data.result.length < 1) {
@@ -162,14 +162,13 @@ $(document).ready(function() {
     var containerNum = 0;
     $.each(agenda, function(i, session) {
       var $list_item, $container, $title, $time, $description, $format, $speakers, $moderator;
-      console.log(session.begin_time+'-07:00');
-      var startTime = new Date(Date.parse(session.begin_time+'-07:00'));
-      var endTime = new Date(Date.parse(session.end_time+'-07:00'));
 
+      var startTime = moment.tz(session.begin_time, "America/Los_Angeles");
+      var endTime = moment.tz(session.end_time, "America/Los_Angeles");
 
-      if (days.indexOf(startTime.getDate()) < 0) {
-        days.push(startTime.getDate());
-        var $day_header = $('<h4>').append(dayOfWeek[startTime.getDay()] + ', ' + months[startTime.getMonth()] + ' ' + startTime.getDate());
+      if (days.indexOf(startTime.dayOfYear()) < 0) {
+        days.push(startTime.dayOfYear());
+        var $day_header = $('<h4>').append(dayOfWeek[startTime.day()] + ', ' + months[startTime.month()] + ' ' + startTime.date());
         $('#agenda').append($day_header).append(
           $('<ul>', {'class': 'agenda day-' + containerNum})
         );
@@ -179,7 +178,7 @@ $(document).ready(function() {
       $list_item = $('<li>', {'class': 'agenda-item'});
       $container = $('<div>', {'class': 'session'});
       $title = $('<span>', {'class': 'title'}).append(session.topic);
-      $time = $('<span>', {'class': 'time'}).append(getTime(startTime) + ' - ' + getTime(endTime));
+      $time = $('<span>', {'class': 'time'}).append(startTime.format('hh:mm A') + ' - ' + endTime.format('hh:mm A'));
       if (session.section_topic_id != 0) {
         $container.addClass('sub-session');
       }
@@ -211,28 +210,6 @@ $(document).ready(function() {
 
       $('.agenda.day-' + (containerNum - 1)).append($list_item);
     });
-  }
-  function getTime(date) {
-    var hours = date.getHours();
-    var minutes = date.getMinutes();
-    var ampm = 'AM';
-    if (hours == 0) {
-      hours = 12;
-    }
-    else if (hours == 12) {
-      ampm = 'PM';
-    }
-    else if (hours > 12) {
-      ampm = 'PM';
-      hours = date.getHours() - 12;
-    }
-    if (hours.toString().length < 2) {
-      hours = '0' + hours;
-    }
-    if (minutes.toString().length < 2) {
-      minutes = '0' + minutes;
-    }
-    return hours + ':' + minutes + ' ' + ampm;
   }
 });
 

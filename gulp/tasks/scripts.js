@@ -20,7 +20,8 @@ gulp.task('scripts', () =>
   // NOTE: The order here is important since it's concatenated in order from
   // top to bottom, so you want vendor scripts etc on top
   gulp.src([
-    'bower_components/DateJS/build/date-en-US.js',
+    'bower_components/moment/min/moment-with-locales.js',
+    'bower_components/moment-timezone/builds/moment-timezone-with-data.js',
     'bower_components/jquery/dist/jquery.min.js',
     'bower_components/foundation-sites/dist/foundation.min.js',
     'src/assets/javascript/vendor.js',
@@ -29,7 +30,7 @@ gulp.task('scripts', () =>
     .pipe(newer('.tmp/assets/javascript/index.js', {dest: '.tmp/assets/javascript', ext: '.js'}))
     .pipe(when(!argv.prod, sourcemaps.init()))
     .pipe(babel({
-      presets: ['es2015']
+      presets: ['es2015-script']
     }))
     .pipe(concat('index.js'))
     .pipe(size({
