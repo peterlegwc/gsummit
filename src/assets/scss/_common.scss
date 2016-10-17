@@ -29,6 +29,9 @@ h1, h2, h3, h4, h5, h6 {
 .secondary {
   color: map-get($foundation-palette, secondary);
 }
+.text-small {
+  font-size: rem-calc(14);
+}
 #map {
   height: rem-calc(400);
 }
@@ -46,6 +49,27 @@ h1, h2, h3, h4, h5, h6 {
     display: none;
   }
 }
+header nav {
+  border-bottom: rem-calc(1) solid $light-gray;
+}
+.is-dropdown-submenu {
+  z-index: 999;
+}
+.top-btn {
+  display: none;
+  border: rem-calc(1) solid rgba(0,0,0,.1);;
+  padding: 0 rem-calc(5);
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  z-index: 2;
+  text-shadow: 0 0 rem-calc(2) rgba(0,0,0,.33);
+  @include breakpoint(medium) {
+    font-size: 1.5em;
+    bottom: 20px;
+    right: 20px;
+  }
+}
 .footer {
   background: darken($dark-gray, 15%);
   color: $white;
@@ -58,8 +82,6 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 .social {
-  // get rid of this later
-  display: none !important;
   ul {
     margin-left: 0;
     margin-bottom: 0;

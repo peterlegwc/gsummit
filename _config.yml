@@ -2,8 +2,15 @@
 # Can be used in your theme by calling 'site.title' and so on
 title: G-Summit
 description: Engage for the Future
-url: http://gsummit.gwc.net
+url: http://thegsummit.org
 baseurl: /
+
+social:
+  links:
+    - https://www.facebook.com/thegmic
+    - https://twitter.com/thegmic
+facebook-url: https://www.facebook.com/thegmic
+twitter-url: https://twitter.com/thegmic
 
 # Used so Jekyll outputs the site correctly so Gulp can do what it wants
 source: .tmp/src

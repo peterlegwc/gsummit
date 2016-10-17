@@ -5,7 +5,7 @@
   position: relative;
   z-index: 1;
   height: rem-calc(240);
-  background-image: url('../images/photo-fireside-ng.jpg');
+  background-image: url('../images/photo-audience.jpg');
   transition: background 1s linear;
   .social {
     display: none;
@@ -96,6 +96,10 @@
       float: none;
       display: inline-block;
     }
+  }
+  img {
+    margin-left: rem-calc(10);
+    margin-right: rem-calc(10);
   }
 }
 .worldmap {

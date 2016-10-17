@@ -8,6 +8,7 @@ var agenda = [];
 
 $(document).ready(function() {
   if ($('.slideshow').length) {
+    var slideTime = 4000;
     var $slides = $('[data-slides]');
     var slideImgs = $slides.data('slides');
     var slideCount = slideImgs.length;
@@ -19,10 +20,10 @@ $(document).ready(function() {
       $slides
         .css('background-image', 'url("' + slideImgs[currentSlide++] + '")')
         .show(0, function() {
-          setTimeout(slideshow, 6000);
+          setTimeout(slideshow, slideTime);
         });
     };
-    setTimeout(slideshow, 6000);
+    setTimeout(slideshow, slideTime);
   }
   if ($('.speakers').length) {
     var opt = {gmicId:event_id};
@@ -211,6 +212,20 @@ $(document).ready(function() {
       $('.agenda.day-' + (containerNum - 1)).append($list_item);
     });
   }
+  $('.top-btn').click(function(e) {
+    $("html, body").animate({ scrollTop: 0 }, "slow");
+    e.preventDefault();
+  });
+
+  $(document).scroll(function() {
+    var y = $(this).scrollTop();
+    var height = window.innerHeight;
+    if (y > height) {
+      $('.top-btn').fadeIn();
+    } else {
+      $('.top-btn').fadeOut();
+    }
+  });
 });
 
 function initMap() {
