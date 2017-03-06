@@ -15,7 +15,7 @@ gulp.task('html', () =>
       collapseWhitespace: true,
       collapseBooleanAttributes: true,
       removeAttributeQuotes: true,
-      removeRedundantAttributes: true
+      removeRedundantAttributes: false
     })))
     .pipe(when(argv.prod, size({title: 'optimized HTML'})))
     .pipe(when(argv.prod, gulp.dest('dist')))
